@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minecraft
+spec:
+  hostNetwork: true
+  containers:
+  - name: minecraft
+    image: itzg/minecraft-server
+    ports:
+    - containerPort: 25565
+    - containerPort: 8100
+    env:
+    - name: EULA
+      value: "TRUE"
+    - name: MEMORY
+      value: "24G"
+    - name: TYPE
+      value: NEOFORGE
+    - name: VERSION
+      value: "1.21.4"
+    - name: NEOFORGE_VERSION
+      value: beta
+    - name: TZ
+      value: "Asia/Tokyo"
+    volumeMounts:
+    - name: minecraft-volume
+      mountPath: /data
+  volumes:
+  - name: minecraft-volume
+    persistentVolumeClaim:
+      claimName: minecraft-claim
+
